@@ -1,4 +1,4 @@
-car_colours = [
+car_colour = [
     'black',
     'white',
     'silver',
@@ -14,73 +14,73 @@ car_colours = [
     'pink'
 ]
 
-car_types = {
-    'Sedan' : {
+car_type = {
+    'sedan' : {
         'seats' : 4,
         'consumption' : 1,
         'comfort' : 2
     },
-    'SUV': {
+    'suv': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 3
     },
-    'Hatchback': {
+    'hatchback': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 3
     },
-    'Coupe': {
+    'coupe': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 2
     },
-    'Convertible/ Roadster': {
+    'convertible': {
         'seats' : 4,
         'consumption' : 3,
         'comfort' : 2
     },
-    'Minivan': {
+    'minivan': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 3
     },
-    'Pickup Truck': {
+    'pickup': {
         'seats' : 4,
         'consumption' : 3,
         'comfort' : 1
     },
-    'Crossover': {
+    'crossover': {
         'seats' : 4,
         'consumption' : 3,
         'comfort' : 2
     },
-    'Sports': {
+    'sports': {
         'seats' : 4,
         'consumption' : 4,
         'comfort' : 1
     },
-    'Electric': {
+    'electric': {
         'seats' : 4,
         'consumption' : 0,
         'comfort' : 3
     },
-    'Hybrid': {
+    'hybrid': {
         'seats' : 4,
         'consumption' : 1,
         'comfort' : 3
     },
-    'Luxury': {
+    'luxury': {
         'seats' : 4,
         'consumption' : 3,
         'comfort' : 4
     },
-    'Compact': {
+    'compact': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 3
     },
-    'Wagon': {
+    'wagon': {
         'seats' : 4,
         'consumption' : 2,
         'comfort' : 3
@@ -107,7 +107,7 @@ car_comfort = {
 }
 
 
-car_brands = {
+car_brand = {
     'mercedes-benz' : {
         'price' : 108000,
         'maintenance' : 3000
