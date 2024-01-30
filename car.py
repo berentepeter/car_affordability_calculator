@@ -14,22 +14,58 @@ def monthly_loan_payment(principal, interest_rate, term):
     return round(payment, 2)
 
 def monthly_maintenance_cost(yearly_maintenance_budget):
-    return yearly_maintenance_budget / 12;
+    return round(yearly_maintenance_budget / 12, 2);
 
 def monthly_gas_price(car_usage, fuel_consumption, state):
     gas = gas_price.gas_prices[state]
     #print(gas)
-    return ((car_usage * 30) / fuel_consumption) * gas;
+    return ((car_usage * 4.3) / fuel_consumption) * gas;
 
 
 def monthly_total_payment():
     pass
-
-
+    
+###TEST function 
+def iterate_dict(dict_to_iterate):
+    for key, value in dict_to_iterate.items():
+        if type(value) == dict:
+            print(key)
+            iterate_dict(value)
+        else:
+            print(key + ":" + str(value))
 
 def main ():
-    lst_car1 = [];
-    lst_car2 = [];
+### TEST function call
+#iterate_dict(car_properties.car_brand);
+
+    dct_car1 = {
+        "type" : "string",
+        "brand" : "string",
+        "price" : 1,
+        "maintenance" : 1,
+        "consumption" :1,
+        "seat" : 1,
+        "comfort" : 1,
+        "colour" : "string",
+        "loan" : 1,
+        "gas" : 1
+    };
+
+    dct_car2 = {
+        "type" : "string",
+        "brand" : "string",
+        "price" : 1,
+        "maintenance" : 1,
+        "consumption" :1,
+        "seat" : 1,
+        "comfort" : 1,
+        "colour" : "string",
+        "loan" : 1,
+        "gas" : 1
+    };
+
+    gas = 0;
+    loan = 0;
 
     while True:
         state = input('Which state do you live in?\n').lower();
@@ -37,13 +73,18 @@ def main ():
             print('Invalid state. Please select from the states of USA');
             continue
         else:
-            lst_car1.append(state);
-            lst_car2.append(state);
+            gas = gas_price.gas_prices[state];
             print("INFO: Gas price in {} is ${}".format(state.title(), gas_price.gas_prices[state]));
             break
-    
-
-    loan_principal = int(input('\nPlease enter the principal amount of the loan:\n'));
+    '''
+    while True:
+        loan_principal = int(input('\nPlease enter the principal amount of the loan:\n (cheapest car available is $20.000)\n'));
+        if loan_principal < 20000:
+            print('WARNING: Please inout a number greater than 20.000 \n');
+            continue
+        else:
+            break
+    '''
 
     loan_interest_rate = float(input('\nPlease enter the yearly interest rate of the loan (i.e: if the interest is 3.2% then enter 3.2):\n'));
     try:
@@ -56,57 +97,127 @@ def main ():
         loan_interest_rate = loan_interest_rate * 0.01;
 
     print("interest rate: {}".format(loan_interest_rate))
+    
     loan_term = int(input('\nPlease enter the loan term (amount of months):\n'));
 
+    #loan = monthly_loan_payment(loan_principal, loan_interest_rate, loan_term);
+
     while True:
-        type = input('\nPlease select a car type\n').lower();
-        if type not in car_properties.car_type:
+        usage_workdays_1 = float(input('\nPlease tell us how many km you drive daily on a workday(Monday-Friday):\n'));
+        usage_weekends_1 = float(input('\nPlease tell us how many km you drive daily on weekend(Saturday-Sunday):\n'));
+        if usage_workdays_1 < 0 or usage_weekends_1 < 0:
+            print('Please enter a positive number ');
+            continue
+        else:
+            usage_all_week = (usage_workdays_1 * 5) + (usage_weekends_1 * 2);
+            break 
+
+
+### CAR #1
+    while True:
+        type_1 = input('\nPlease select a type for car#1\n').lower();
+        if type_1 not in car_properties.car_type:
             print('WARNING: Unavailable car type. Please select from the following list: \n Sedan, SUV, Hatchback, Coupe, Convertible, Minivan, Pickup, Sports, Electric, Hybrid, Luxury, Compact, Wagon, 4x4 ');
             continue
         else:
-            lst_car1.append(type);
+            dct_car1.update(type=type_1);
             break
-    print("type: {}".format(type))
-    
+
     while True:
-        brand = input('\nPlease select a car brand\n').lower();
-        if brand not in car_properties.car_brand:
+        brand_1 = input('\nPlease select a brand for car#1\n').lower();
+        if brand_1 not in car_properties.car_brand:
             print('WARNING: Unavailable car brand. Please select from the following list: \n   Mercedes-Benz, Audi, BMW, Lexus, Cadillac, Infiniti, Acura, VolksWagen, Kia, Subaru, Toyota, Nissan, Hyundai, Mazda, Honda, Jeep, GMC, RAM, Ford, Chevrolet');
             continue
         else:
-            lst_car1.append(brand);
+            dct_car1.update(brand=brand_1);
             break
-    
-    print("brand: {}".format(brand))
-
-    print('monthly loan payment: ${}'.format(monthly_loan_payment(loan_principal, loan_interest_rate, loan_term)))
-
-    price = car_properties.car_brand.get(brand).get('price');
-    print("price: ${}".format(price));
-    maintenance = car_properties.car_brand.get(brand).get('maintenance');
-    print("yearly maintenance: ${}".format(maintenance));
-    seat = car_properties.car_type.get(type).get('seats');
-    print("number of seats: {}".format(seat));
-    consumption = car_properties.car_type.get(type).get('consumption');
-    print("consumption: {}".format(consumption));
-    comfort = car_properties.car_type.get(type).get('comfort');
-    print("comfort: {}".format(comfort));
-
 
     while True:
-        colour = input('\nEnter car colour:\n').lower();
+        colour_1 = input('\nEnter car colour:\n').lower();
 
-        if colour not in  car_properties.car_colour:
+        if colour_1 not in  car_properties.car_colour:
             print('This is not an available colour, please pick another');
             continue
         else:
-            lst_car1.append(colour);
+            dct_car1.update(colour=colour_1);
+            break   
+
+    price_1 = car_properties.car_brand.get(brand_1).get('price');
+    maintenance_1 = car_properties.car_brand.get(brand_1).get('maintenance');
+    seat_1 = car_properties.car_type.get(type_1).get('seats');
+    consumption_1 = car_properties.car_type.get(type_1).get('consumption');
+    comfort_1 = car_properties.car_type.get(type_1).get('comfort');
+    loan_1 = monthly_loan_payment(price_1, loan_interest_rate, loan_term);
+    gas_1 = monthly_gas_price(usage_all_week, consumption_1, state);
+
+    print('\nCAR #1:');
+    print('monthly loan payment: ${}'.format(loan_1));
+    print("car#1 type: {}".format(type_1));
+    print("car#1 brand: {}".format(brand_1));
+    print("price: ${}".format(price_1));
+    print("monthly maintenance: ${}".format(monthly_maintenance_cost(maintenance_1)));
+    print("number of seats: {}".format(seat_1));
+    print("consumption: {}L/100km".format(consumption_1));
+    print("estimated monthly gas price: ${}".format(gas_1))
+    print("comfort: {}".format(comfort_1));
+    print("colour: {}".format(colour_1));
+
+    dct_car1.update(price=price_1, maintenance=maintenance_1, seat=seat_1, consumption=consumption_1, comfort=comfort_1, colour=colour_1, loan=loan_1, gas=gas_1);
+    #print(dct_car1);
+
+###CAR #2
+    while True:
+        type_2 = input('\nPlease select a type for car#2\n').lower();
+        if type_2 not in car_properties.car_type:
+            print('WARNING: Unavailable car type. Please select from the following list: \n Sedan, SUV, Hatchback, Coupe, Convertible, Minivan, Pickup, Sports, Electric, Hybrid, Luxury, Compact, Wagon, 4x4 ');
+            continue
+        else:
+            dct_car2.update(type=type_2);
+            break
+    print("car#1 type: {}".format(type_2))
+
+    while True:
+        brand_2 = input('\nPlease select a brand for car#2\n').lower();
+        if brand_2 not in car_properties.car_brand:
+            print('WARNING: Unavailable car brand. Please select from the following list: \n   Mercedes-Benz, Audi, BMW, Lexus, Cadillac, Infiniti, Acura, VolksWagen, Kia, Subaru, Toyota, Nissan, Hyundai, Mazda, Honda, Jeep, GMC, RAM, Ford, Chevrolet');
+            continue
+        else:
+            dct_car2.update(brand=brand_2);
+            break
+    while True:
+        colour_2 = input('\nEnter car colour:\n').lower();
+
+        if colour_2 not in  car_properties.car_colour:
+            print('This is not an available colour, please pick another');
+            continue
+        else:
+            dct_car2.update(colour=colour_2);
             break
 
-    print(lst_car1)
-   # car2 = input('Enter a car option2(brand, type, colour): ');
-    print('You selected a {} {} in {}'.format(*lst_car1));
-    #print('You also selected a {} {} in {}'.format(*lst_car2));
+    price_2 = car_properties.car_brand.get(brand_2).get('price');
+    maintenance_2 = car_properties.car_brand.get(brand_2).get('maintenance');
+    seat_2 = car_properties.car_type.get(type_2).get('seats');
+    consumption_2 = car_properties.car_type.get(type_2).get('consumption');
+    comfort_2 = car_properties.car_type.get(type_2).get('comfort');
+    loan_2 = monthly_loan_payment(price_2, loan_interest_rate, loan_term);
+    gas_2 = monthly_gas_price(usage_all_week, consumption_2, state);
+
+    print('\nCAR #2:');
+    print("car#1 type: {}".format(type_2));
+    print("car#1 brand: {}".format(brand_2));
+    print('monthly loan payment: ${}'.format(loan_2));    
+    print("price: ${}".format(price_2));
+    print("monthly maintenance: ${}".format(monthly_maintenance_cost(maintenance_2)));
+    print("number of seats: {}".format(seat_2));
+    print("consumption: {}L/100km".format(consumption_2));
+    print("estimated monthly gas price: ${}".format(gas_2))
+    print("comfort: {}".format(comfort_2));
+    print("colour: {}".format(colour_2));
+
+    dct_car2.update(price=price_2, maintenance=maintenance_2, seat=seat_2, consumption=consumption_2, comfort=comfort_2, colour=colour_2, loan=loan_2, gas=gas_2);
+    #print(dct_car1);
+    #print(dct_car2);
+
 
 if __name__ == '__main__':
     main ()
