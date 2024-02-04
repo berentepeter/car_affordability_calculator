@@ -22,9 +22,34 @@ def monthly_gas_price(car_usage, fuel_consumption, state):
     return ((car_usage * 4.3) / fuel_consumption) * gas;
 
 
-def monthly_total_payment():
-    pass
-    
+def size_compare(dict1, dict2):
+    if dict1['seat'] + dict1['comfort']> dict2['seat'] + dict2['comfort']:
+        return dict1;
+    elif dict1['seat'] + dict1['comfort']< dict2['seat'] + dict2['comfort']:
+        return dict2;
+    else: 
+        return None;
+
+def compare_and_select(dict1, dict2):
+    #sum_dict1 = sum(dict1.values())
+    #sum_dict2 = sum(dict2.values())
+    sum_dict1 = sum(value for value in dict1.values() if isinstance(value, int));
+    sum_dict2 = sum(value for value in dict2.values() if isinstance(value, int));
+
+    if kids_number > 0: #bele kell irni a dicitonary-be, vagy utananezni globalis valtozoknak!!
+        try: size_compare(dict1, dict2)
+        except: 
+            print("Both cars have same (size+comfort) index")
+            kids_number = 0
+            compare_and_select(dict1, dict2)
+    elif sum_dict1 > sum_dict2:
+        return dict1;
+    elif sum_dict2 > sum_dict1:
+        return dict2;
+    else:
+        return None; # if they are equal
+
+'''
 ###TEST function 
 def iterate_dict(dict_to_iterate):
     for key, value in dict_to_iterate.items():
@@ -33,10 +58,13 @@ def iterate_dict(dict_to_iterate):
             iterate_dict(value)
         else:
             print(key + ":" + str(value))
+'''
+
 
 def main ():
+
 ### TEST function call
-#iterate_dict(car_properties.car_brand);
+### iterate_dict(car_properties.car_brand);
 
     dct_car1 = {
         "type" : "string",
@@ -66,7 +94,7 @@ def main ():
 
     gas = 0;
     loan = 0;
-
+    kids_number = -1;
     while True:
         state = input('Which state do you live in?\n').lower();
         if state not in states.states:
@@ -112,6 +140,18 @@ def main ():
             usage_all_week = (usage_workdays_1 * 5) + (usage_weekends_1 * 2);
             break 
 
+    while True:
+        kids = input('\nDo you have kids?\n').lower();
+        if kids in ('yes', 'y', 'sure', 'ocf'):
+            kids_number = int(input('\nHow many? (under 18)\n'));
+            break
+        elif kids in ('no', 'n', 'nope', 'maybe'):
+            kids_number = 0;
+            break
+        else:
+            print('\ninvalid answer\n');
+            continue
+            
 
 ### CAR #1
     while True:
@@ -149,7 +189,7 @@ def main ():
     comfort_1 = car_properties.car_type.get(type_1).get('comfort');
     loan_1 = monthly_loan_payment(price_1, loan_interest_rate, loan_term);
     gas_1 = monthly_gas_price(usage_all_week, consumption_1, state);
-
+    '''
     print('\nCAR #1:');
     print('monthly loan payment: ${}'.format(loan_1));
     print("car#1 type: {}".format(type_1));
@@ -161,7 +201,7 @@ def main ():
     print("estimated monthly gas price: ${}".format(gas_1))
     print("comfort: {}".format(comfort_1));
     print("colour: {}".format(colour_1));
-
+    '''
     dct_car1.update(price=price_1, maintenance=maintenance_1, seat=seat_1, consumption=consumption_1, comfort=comfort_1, colour=colour_1, loan=loan_1, gas=gas_1);
     #print(dct_car1);
 
@@ -201,7 +241,7 @@ def main ():
     comfort_2 = car_properties.car_type.get(type_2).get('comfort');
     loan_2 = monthly_loan_payment(price_2, loan_interest_rate, loan_term);
     gas_2 = monthly_gas_price(usage_all_week, consumption_2, state);
-
+    '''
     print('\nCAR #2:');
     print("car#1 type: {}".format(type_2));
     print("car#1 brand: {}".format(brand_2));
@@ -213,11 +253,28 @@ def main ():
     print("estimated monthly gas price: ${}".format(gas_2))
     print("comfort: {}".format(comfort_2));
     print("colour: {}".format(colour_2));
-
+    '''
     dct_car2.update(price=price_2, maintenance=maintenance_2, seat=seat_2, consumption=consumption_2, comfort=comfort_2, colour=colour_2, loan=loan_2, gas=gas_2);
     #print(dct_car1);
     #print(dct_car2);
 
+    result_dict = compare_and_select(dct_car1, dct_car2)
+
+    if result_dict:
+        print("\n ");
+        print(f"\nBetter choice for you:");
+        print(f"fcar#1 type: {result_dict['type']}");
+        print(f"car#1 brand: {result_dict['brand']}");
+        print(f"monthly loan payment: ${result_dict['loan']}");
+        print(f"price: ${result_dict['price']}");
+        print(f"monthly maintenance: ${monthly_maintenance_cost(result_dict['maintenance'])}");
+        print(f"number of seats: {result_dict['seat']}");
+        print(f"consumption: {result_dict['consumption']}L/100km");
+        print(f"estimated monthly gas price: ${result_dict['gas']}")
+        print(f"comfort: {result_dict['comfort']}");
+        print(f"colour: {result_dict['colour']}");
+    else:
+        print("Both car you selected could be a good choice.")
 
 if __name__ == '__main__':
     main ()
