@@ -106,6 +106,12 @@ def main ():
     
     loan_term = int(input('\nPlease enter the loan term (amount of months):\n'));
 
+    down_payment_q = input('Do you want to pay down-payment?')
+    if down_payment_q in ('yes', 'y', 'sure', 'ocf'):
+        down_payment_a = int(input('How much?'))
+    else:
+        down_payment_a = 0
+
     while True:
         usage_workdays_1 = float(input('\nPlease tell us how many km you drive daily on a workday(Monday-Friday):\n'));
         usage_weekends_1 = float(input('\nPlease tell us how many km you drive daily on weekend(Saturday-Sunday):\n'));
@@ -158,7 +164,7 @@ def main ():
             dct_car1.update(colour=colour_1);
             break   
 
-    price_1 = car_properties.car_brand.get(brand_1).get('price');
+    price_1 = car_properties.car_brand.get(brand_1).get('price') - down_payment_a;
     maintenance_1 = car_properties.car_brand.get(brand_1).get('maintenance');
     seat_1 = car_properties.car_type.get(type_1).get('seats');
     consumption_1 = car_properties.car_type.get(type_1).get('consumption');
@@ -196,7 +202,7 @@ def main ():
             dct_car2.update(colour=colour_2);
             break
 
-    price_2 = car_properties.car_brand.get(brand_2).get('price');
+    price_2 = car_properties.car_brand.get(brand_2).get('price') - down_payment_a;
     maintenance_2 = car_properties.car_brand.get(brand_2).get('maintenance');
     seat_2 = car_properties.car_type.get(type_2).get('seats');
     consumption_2 = car_properties.car_type.get(type_2).get('consumption');
