@@ -106,7 +106,7 @@ def main ():
     
     loan_term = int(input('\nPlease enter the loan term (amount of months):\n'));
 
-    down_payment_q = input('Do you want to pay down-payment?')
+    down_payment_q = input('\nDo you want to pay down-payment?')
     if down_payment_q in ('yes', 'y', 'sure', 'ocf'):
         down_payment_a = int(input('How much?'))
     else:
@@ -125,7 +125,7 @@ def main ():
     while True:
         kids = input('\nDo you have kids?\n').lower();
         if kids in ('yes', 'y', 'sure', 'ocf'):
-            kids_number = int(input('\nHow many? (under 18)\n'));
+            kids_number = int(input('How many? (under 18)\n'));
             break
         elif kids in ('no', 'n', 'nope', 'maybe'):
             kids_number = 0;
@@ -215,10 +215,10 @@ def main ():
     result_dict = compare_and_select(dct_car1, dct_car2)
 
     if result_dict:
-        print("\n ");
+        print(" ");
         print(f"\nBetter choice for you:");
-        print(f"fcar#1 type: {result_dict['type']}");
-        print(f"car#1 brand: {result_dict['brand']}");
+        print(f"type: {result_dict['type']}");
+        print(f"brand: {result_dict['brand']}");
         print(f"monthly loan payment: ${result_dict['loan']}");
         print(f"price: ${result_dict['price']}");
         print(f"monthly maintenance: ${monthly_maintenance_cost(result_dict['maintenance'])}");
