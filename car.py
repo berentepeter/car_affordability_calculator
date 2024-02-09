@@ -93,22 +93,16 @@ def main ():
     gas = 0;
     loan = 0;
 
-
     state = get_user_input('Which state do you live in?\n', states.states, 'Invalid state. Please select from the states of USA')
     gas = gas_price.gas_prices[state];
     print("INFO: Gas price in {} is ${}".format(state.title(), gas_price.gas_prices[state]));
 
-    loan_interest_rate = float(input('\nPlease enter the yearly interest rate of the loan (i.e: if the interest is 3.2% then enter 3.2):\n'));
-    try:
-        1/loan_interest_rate;
-        1/(loan_interest_rate + math.sqrt(loan_interest_rate ** 2));
-    except:
-        print("ERROR: please try again with interest rate being a positive number greater than 0");
-        exit();
-    finally:
-        loan_interest_rate = loan_interest_rate * 0.01;
+    intereset_list_float = [str(i / 10) for i in range(0, 1001)];
+    intereset_list_int = [str(i) for i in range(101)];
+    intereset_list = intereset_list_float + intereset_list_int;
 
-    #print("interest rate: {}".format(loan_interest_rate))
+    loan_interest_rate = get_user_input('\nPlease enter the yearly interest rate of the loan (i.e: if the interest is 3.2% then enter 3.2):\n', intereset_list, "Invalid answer: please try again with interest rate being a positive number greater than 0");
+    loan_interest_rate = float(loan_interest_rate) * 0.01;
     
     loan_term = int(input('\nPlease enter the loan term (amount of months):\n'));
 
@@ -118,23 +112,19 @@ def main ():
     else:
         down_payment_a = 0
 
-    while True:
-        usage_workdays_1 = float(input('\nPlease tell us how many km you drive daily on a workday(Monday-Friday):\n'));
-        usage_weekends_1 = float(input('\nPlease tell us how many km you drive daily on weekend(Saturday-Sunday):\n'));
-        if usage_workdays_1 < 0 or usage_weekends_1 < 0:
-            print('Please enter a positive number ');
-            continue
-        else:
-            usage_all_week = (usage_workdays_1 * 5) + (usage_weekends_1 * 2);
-            break
+    km_list_float = [str(i / 10) for i in range(0, 10001)];
+    km_list_int = [str(i) for i in range(1001)];
+    km_list = km_list_float + km_list_int;
+
+    usage_workdays_1 = get_user_input('\nPlease tell us how many km you drive daily on a workday(Monday-Friday):\n', km_list, 'Invalid answer: Please enter a positive integer');
+    usage_weekends_1 = get_user_input('\nPlease tell us how many km you drive daily on weekend(Saturday-Sunday):\n', km_list, 'Invalid answer: Please enter a positive integer');
+    usage_all_week = (float(usage_workdays_1) * 5) + (float(usage_weekends_1) * 2);
 
     kids = get_user_input('\nDo you have kids?\n', ('yes', 'y', 'sure', 'ocf', 'no', 'n', 'nope', 'maybe'), '\ninvalid answer\n')
     if kids in ('yes', 'y', 'sure', 'ocf'):
         kids_number = int(input('How many? (under 18)\n'));
     elif kids in ('no', 'n', 'nope', 'maybe'):
         kids_number = 0;
- 
-            
 
 ### CAR #1
     type_1 = get_user_input('\nPlease select a type for car#1\n', car_properties.car_type, 'WARNING: Unavailable car type. Please select from the following list: \n Sedan, SUV, Hatchback, Coupe, Convertible, Minivan, Pickup, Sports, Electric, Hybrid, Luxury, Compact, Wagon, 4x4');
